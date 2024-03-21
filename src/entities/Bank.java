@@ -2,6 +2,9 @@ package entities;
 
 import entities.enums.AccountType;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -18,6 +21,8 @@ public class Bank {
     String tConta = "";
     double saldoInicial = 0;
 
+    double limite = 0;
+
     LocalDateTime data = LocalDateTime.now();
 
     DateTimeFormatter hora = DateTimeFormatter.ofPattern("HH");
@@ -30,9 +35,6 @@ public class Bank {
             String numeroAgencia = scanner.nextLine();
             System.out.print("Número da conta: ");
             String numeroConta = scanner.nextLine();
-            System.out.print("Saldo inicial: ");
-            double limite = scanner.nextDouble();
-            scanner.nextLine();
             menuTipoConta();
             BankAccount conta = new BankAccount(numeroAgencia, numeroConta, saldoInicial, limite, tConta);
             accounts.put(numeroConta, conta);
@@ -51,16 +53,14 @@ public class Bank {
             switch (op) {
                 case 1:
                     System.out.print("Limite: ");
-                    saldoInicial = scanner.nextDouble();
+                    limite = scanner.nextDouble();
                     tConta = String.valueOf(AccountType.CORRENTE);
                     break;
                 case 2:
                     tConta = String.valueOf(AccountType.POUPANÇA);
-                    saldoInicial = 0;
                     break;
                 case 3:
                     tConta = String.valueOf(AccountType.SALÁRIO);
-                    saldoInicial = 0;
                     break;
                 default:
                     System.out.println("Opção inválida.");
@@ -101,6 +101,7 @@ public class Bank {
         BankAccount conta = accounts.get(numeroConta);
         if (conta != null) {
             conta.retirar(valor);
+            System.out.println("Saque realizado com sucesso!");
         } else {
             System.out.println("Conta não encontrada.");
         }
@@ -143,13 +144,55 @@ public class Bank {
         }
     }
 
+
     public void exportarHistorico() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("----- Histórico de transações -----");
         System.out.print("Digite a conta que deseja acessar: ");
         String contaHistorico = scanner.nextLine();
         BankAccount conta = accounts.get(contaHistorico);
-        System.out.println(conta.getHistoricoTransacoes());
+
+        String path = "C:\\historicoTransacoes.csv";
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for(String line : conta.getHistoricoTransacoes()) {
+                bw.write(line);
+                bw.newLine();
+            }
+            System.out.println("Transações da Conta " + contaHistorico + " exportadas com Sucesso!");
+            System.out.println("Acesse no seu Desktop: " + path);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("Verifique a Conta Digitada e tente novamente...\n");
+            menu();
+        }
+
+    }
+
+    public void exportarHistoricoContas() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("----- Histórico de Contas -----");
+        List<String> historicoTransacoesContas = new ArrayList<>();
+        historicoTransacoesContas.add(accounts.toString());
+
+        String path = "C:\\historicoTransacoesContas.csv";
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for(String line : historicoTransacoesContas) {
+                bw.write(line);
+                bw.newLine();
+            }
+            System.out.println("Transações das Contas exportadas com Sucesso!");
+            System.out.println("Acesse no seu Desktop: " + path);
+        } catch (IOException e) {
+            System.out.println("Erro, tente novamente...");
+            menu();
+        }
+    }
+
+    private void menu() {
     }
 
     @Override

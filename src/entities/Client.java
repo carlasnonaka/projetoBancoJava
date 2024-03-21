@@ -73,21 +73,6 @@ public class Client {
         this.endereco = endereco;
     }
 
-    public void cadastrarCliente() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("----- Cadastro de Cliente -----");
-        System.out.print("Nome: ");
-        this.nome = scanner.nextLine();
-        System.out.print("RG: ");
-        this.rg = scanner.nextLine();
-        System.out.print("CPF: ");
-        this.cpf = scanner.nextLine();
-        System.out.print("TELEFONE: ");
-        this.telefone = scanner.nextLine();
-        System.out.print("ENDEREÇO: ");
-        this.endereco = scanner.nextLine();
-        scanner.close();
-    }
     @Override
     public String toString() {
         return "Cliente{" +

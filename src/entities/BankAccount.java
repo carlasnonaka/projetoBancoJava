@@ -60,18 +60,26 @@ public class BankAccount {
             historicoTransacoes.add("Limite alterado para " + novoLimite);
         }
 
+        public void atualizarSaldoAtual(double saldo) {
+            this.saldo = saldo;
+            historicoTransacoes.add("Saldo Atual " + saldo);
+        }
+
         public List<String> getHistoricoTransacoes() {
+            atualizarSaldoAtual(this.saldo);
             return historicoTransacoes;
         }
 
     @Override
     public String toString() {
-        return  client.toString() + "\n"
-                + "Agência=" + numeroAgencia + "\n"
-                + "Conta= "+ numeroConta + "\n"
-                + "Saldo= " + saldo + "\n"
-                + "Tipo de Conta= " + tipoConta + "\n"
-                + "Histórico de Transações= " + getHistoricoTransacoes() + "\n";
-
+        return "BankAccount{" +
+                "numeroAgencia='" + numeroAgencia + '\'' +
+                ", numeroConta='" + numeroConta + '\'' +
+                ", saldo=" + saldo +
+                ", tipoConta='" + tipoConta + '\'' +
+                ", limite=" + limite +
+                ", client=" + client +
+                ", historicoTransacoes=" + historicoTransacoes +
+                '}';
     }
 }
