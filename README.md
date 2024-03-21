@@ -32,5 +32,14 @@ Projeto de Banco realizado pelo Renew your career: Java
 <img width="770" alt="image" src="https://github.com/carlasnonaka/projetoBancoJava/assets/91844609/a403a201-805c-4245-9f3a-f7c3a3ed86ec">
 
 
+## Diagrama com MermaidJS direto no README
 
+```mermaid
+flowchart LR
+
+A[Hard] -->|Text| B(Round)
+B --> C{Decision}
+C -->|One| D[Result 1]
+C -->|Two| E[Result 2]
+```
 
