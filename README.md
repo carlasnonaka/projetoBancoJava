@@ -43,3 +43,10 @@ C -->|One| D[Result 1]
 C -->|Two| E[Result 2]
 ```
 
+## Exemplo processamento highlighting de código
+
+```java
+public static void main(String[] args){
+  System.out.print("Hello World");
+}
+```
